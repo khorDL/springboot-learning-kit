@@ -1,0 +1,30 @@
+meta {
+  name: Retrieve Order Status
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:8080/OrderService/order/status/1
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "orderId": 1234567,
+    "orderType": "ONLINE",
+    "items": [
+      {
+        "productId": 1,
+        "quantity": 2,
+        "status": "PROCESSING"
+      },
+      {
+        "productId": 2,
+        "quantity": 1,
+        "status": "PROCESSING"
+      }
+    ]
+  }
+}

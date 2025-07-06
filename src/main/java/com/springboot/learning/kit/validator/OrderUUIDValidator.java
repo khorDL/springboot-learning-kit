@@ -10,7 +10,7 @@ public class OrderUUIDValidator implements Validator<Long>{
         if(uuid == null){
             throw new OrderValidationException("UUID cannot be null");
         }
-        if(uuid < 0){
+        if(uuid <= 0){
             throw new OrderValidationException("UUID must be positive");
         }
     }

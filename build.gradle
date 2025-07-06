@@ -63,6 +63,11 @@ dependencies {
 	implementation "org.liquibase:liquibase-core:${liquibaseVersion}"
 	implementation "org.postgresql:postgresql:${postgresVersion}"
 
+	//added from task-2 Validation on Customer Details
+	implementation "com.sun.mail:jakarta.mail:2.0.1"
+
+
+
 	// Lombok
 	compileOnly "org.projectlombok:lombok:${lombokVersion}"
 	annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
@@ -99,6 +104,13 @@ liquibase {
 			username 'user'
 			password 'password'
 			driver 'org.postgresql.Driver'
+		}
+
+		dropAll {
+			changeLogFile 'src/main/resources/db/changelog/master.xml'
+			url 'jdbc:postgresql://localhost:5432/your_db_name'
+			username 'user'
+			password 'password'
 		}
 	}
 	runList = 'main'
