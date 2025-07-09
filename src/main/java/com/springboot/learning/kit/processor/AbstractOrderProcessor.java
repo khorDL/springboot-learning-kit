@@ -37,7 +37,6 @@ public abstract class AbstractOrderProcessor {
      * @Transactional ensures that the method is executed within a transaction.
      * @param orderRequest the order request object
      */
-    @Transactional
     public void saveOrder(OrderRequest orderRequest) {
         // Save customer details and address
         long customerId = customerService.saveCustomerDetails(orderRequest.getCustomerDetails());
@@ -45,6 +44,8 @@ public abstract class AbstractOrderProcessor {
 
         // now save order as we've got customer and address IDs
         orderService.saveNewOrder(orderRequest, customerId, addressId);
+
+        orderService.publishOrderPlacedEvent(orderRequest);
 
         // now we can save order items
         orderItemService.saveOrderItems(orderRequest.getOrderItems(), orderRequest.getUUID());

@@ -3,6 +3,7 @@ package com.springboot.learning.kit.service;
 import com.springboot.learning.kit.domain.OrderType;
 import com.springboot.learning.kit.dto.request.OrderRequest;
 import com.springboot.learning.kit.processor.AbstractOrderProcessor;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class OrderProcessingService {
     private final Set<AbstractOrderProcessor> orderProcessors;
     private final OrderValidationService orderValidationService;
 
+    @Transactional
     public void processNewOrder(OrderRequest orderRequest) {
 
         // Perform validation on the incoming order request
