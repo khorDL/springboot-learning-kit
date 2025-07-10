@@ -1,127 +1,115 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.4.4'
-	id 'io.spring.dependency-management' version '1.1.7'
-	id 'org.asciidoctor.jvm.convert' version '3.3.2'
-	id 'org.liquibase.gradle' version '2.2.0'
+    id 'java'
+    id 'org.springframework.boot' version '3.4.4'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.asciidoctor.jvm.convert' version '3.3.2'
+    id 'org.liquibase.gradle' version '2.2.0'
 }
 
 group = 'com.springboot.learning.kit'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-	liquibaseRuntime
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    liquibaseRuntime
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 ext {
-	set('snippetsDir', file("build/generated-snippets"))
+    set('snippetsDir', file("build/generated-snippets"))
 }
 
 dependencies {
 
-	def springBootVersion = '3.4.4'
-	def camelVersion = '4.4.0'
-	def postgresVersion = '42.7.2'
-	def liquibaseVersion = '4.29.2'
-	def picocliVersion = '4.7.5'
-	def prometheusVersion = '1.14.5'
-	def lombokVersion = '1.18.36'
-	def springRestDocsVersion = '3.0.3'
-	def testContainerVersion = '1.20.6'
-	def testContainerPostgresVersion = '1.19.0'
-	def junitPlatformVersion = '1.11.4'
-	def openApiSpringDocsVersion = '2.8.6'
-	def testContainerRabbitMQVersion = '1.21.2'
+    def springBootVersion = '3.4.4'
+    def camelVersion = '4.4.0'
+    def postgresVersion = '42.7.2'
+    def liquibaseVersion = '4.29.2'
+    def picocliVersion = '4.7.5'
+    def prometheusVersion = '1.14.5'
+    def lombokVersion = '1.18.36'
+    def springRestDocsVersion = '3.0.3'
+    def testContainerVersion = '1.20.6'
+    def testContainerPostgresVersion = '1.19.0'
+    def junitPlatformVersion = '1.11.4'
+    def openApiSpringDocsVersion = '2.8.6'
+    def testContainerRabbitMQVersion = '1.21.2'
 
-	implementation "org.springframework.boot:spring-boot-starter-activemq:${springBootVersion}"
-	implementation "org.springframework.boot:spring-boot-starter-amqp:${springBootVersion}"
-	implementation "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}"
-	implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
-	implementation "org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}"
-	implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
-	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${openApiSpringDocsVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-activemq:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-amqp:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${openApiSpringDocsVersion}"
 
-	// These dependencies are required for the Spring Boot application to work with Camel
-	implementation "org.apache.camel.springboot:camel-spring-boot-starter:${camelVersion}"
-	implementation "org.apache.camel.springboot:camel-jms-starter:${camelVersion}"
-	implementation "org.apache.camel.springboot:camel-activemq-starter:${camelVersion}"
+    // These dependencies are required for the Spring Boot application to work with Camel
+    implementation "org.apache.camel.springboot:camel-spring-boot-starter:${camelVersion}"
+    implementation "org.apache.camel.springboot:camel-jms-starter:${camelVersion}"
+    implementation "org.apache.camel.springboot:camel-activemq-starter:${camelVersion}"
 
-	implementation "io.micrometer:micrometer-registry-prometheus:${prometheusVersion}"
-	implementation "org.liquibase:liquibase-core:${liquibaseVersion}"
-	implementation "org.postgresql:postgresql:${postgresVersion}"
+    implementation "io.micrometer:micrometer-registry-prometheus:${prometheusVersion}"
+    implementation "org.liquibase:liquibase-core:${liquibaseVersion}"
+    implementation "org.postgresql:postgresql:${postgresVersion}"
 
-	//added from task-2 Validation on Customer Details
-	implementation "com.sun.mail:jakarta.mail:2.0.1"
+    //added from task-2 Validation on Customer Details
+    implementation "com.sun.mail:jakarta.mail:2.0.1"
 
 
+    // Lombok
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
-	// Lombok
-	compileOnly "org.projectlombok:lombok:${lombokVersion}"
-	annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-	testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
-	testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-
-	developmentOnly "org.springframework.boot:spring-boot-docker-compose:${springBootVersion}"
-	runtimeOnly "io.micrometer:micrometer-registry-prometheus:${prometheusVersion}"
+    developmentOnly "org.springframework.boot:spring-boot-docker-compose:${springBootVersion}"
+    runtimeOnly "io.micrometer:micrometer-registry-prometheus:${prometheusVersion}"
 
     // Liquibase dependencies
-	liquibaseRuntime "org.liquibase:liquibase-core:${liquibaseVersion}"
-	liquibaseRuntime "org.postgresql:postgresql:${postgresVersion}"
-	liquibaseRuntime "info.picocli:picocli:${picocliVersion}"
+    liquibaseRuntime "org.liquibase:liquibase-core:${liquibaseVersion}"
+    liquibaseRuntime "org.postgresql:postgresql:${postgresVersion}"
+    liquibaseRuntime "info.picocli:picocli:${picocliVersion}"
 
-	annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
-	testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
-	testImplementation "org.springframework.boot:spring-boot-testcontainers:${springBootVersion}"
-	testImplementation "org.springframework.restdocs:spring-restdocs-mockmvc:${springRestDocsVersion}"
-	testImplementation "org.testcontainers:activemq:${testContainerVersion}"
-	testImplementation "org.testcontainers:junit-jupiter:${testContainerVersion}"
-	testImplementation "org.testcontainers:postgresql:${testContainerPostgresVersion}"
-	testImplementation "org.testcontainers:rabbitmq:${testContainerRabbitMQVersion}"
-	testImplementation "org.liquibase:liquibase-core:${liquibaseVersion}"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+    testImplementation "org.springframework.boot:spring-boot-testcontainers:${springBootVersion}"
+    testImplementation "org.springframework.restdocs:spring-restdocs-mockmvc:${springRestDocsVersion}"
+    testImplementation "org.testcontainers:activemq:${testContainerVersion}"
+    testImplementation "org.testcontainers:junit-jupiter:${testContainerVersion}"
+    testImplementation "org.testcontainers:postgresql:${testContainerPostgresVersion}"
+    testImplementation "org.testcontainers:rabbitmq:${testContainerRabbitMQVersion}"
+    testImplementation "org.liquibase:liquibase-core:${liquibaseVersion}"
 
-	testRuntimeOnly "org.junit.platform:junit-platform-launcher:${junitPlatformVersion}"
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher:${junitPlatformVersion}"
 }
 
 liquibase {
-	activities {
-		main {
-			changelogFile 'src/main/resources/db/changelog/db.changelog-master.xml'
-			url 'jdbc:postgresql://localhost:5432/Order_Service'
-			username 'user'
-			password 'password'
-			driver 'org.postgresql.Driver'
-		}
-
-		dropAll {
-			changeLogFile 'src/main/resources/db/changelog/master.xml'
-			url 'jdbc:postgresql://localhost:5432/your_db_name'
-			username 'user'
-			password 'password'
-		}
-	}
-	runList = 'main'
+    activities {
+        main {
+            defaultsFile 'src/main/resources/liquibase/liquibase.properties'
+        }
+    }
+    runList = 'main'
 }
 
 tasks.named('test') {
-	outputs.dir snippetsDir
-	useJUnitPlatform()
+    outputs.dir snippetsDir
+    useJUnitPlatform()
 }
 
 tasks.named('asciidoctor') {
-	inputs.dir snippetsDir
-	dependsOn test
+    inputs.dir snippetsDir
+    dependsOn test
 }
