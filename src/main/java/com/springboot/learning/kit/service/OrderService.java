@@ -44,5 +44,6 @@ public class OrderService {
         OrderPlacedEvent orderPlacedEvent = orderEventTransformer.transformToOrderPlacedEvent(orderRequest);
 
         orderEventProducer.sendNewOrderNotificationToVirtualTopic(orderPlacedEvent);
+        orderEventProducer.sendNewOrderNotificationToRabbitMQQueue(orderPlacedEvent);
     }
 }
