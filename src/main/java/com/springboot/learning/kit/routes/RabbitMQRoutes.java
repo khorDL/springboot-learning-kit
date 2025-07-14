@@ -72,5 +72,4 @@ public class RabbitMQRoutes {
     public Binding dlqBinding(Queue deadLetterQueue, TopicExchange dlqExchange) {
         return BindingBuilder.bind(deadLetterQueue).to(dlqExchange).with(orderPlacementQueueDlq);
     }
-
 }

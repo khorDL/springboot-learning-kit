@@ -7,11 +7,10 @@ import com.springboot.learning.kit.dto.response.OrderStatusResponse;
 import com.springboot.learning.kit.exception.OrderNotFoundException;
 import com.springboot.learning.kit.repository.OrderItemRepository;
 import com.springboot.learning.kit.repository.OrderRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
+import io.micrometer.core.annotation.Timed;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -19,16 +18,17 @@ public class OrderStatusService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
 
-
+    @Timed(value = "read.order.status", description = "Time taken to retrieve order status from database")
     public OrderStatusResponse getOrderStatus(Long orderUUID) {
-        //first fetch the order from repo
-        Order order = orderRepository.findById(orderUUID)
+        // first fetch the order from repo
+        Order order = orderRepository
+                .findById(orderUUID)
                 .orElseThrow(() -> new OrderNotFoundException("Order not found with UUID: " + orderUUID));
 
-        //then fetch order items associated with order repo
-        List<OrderItem> orderItems= orderItemRepository.findByOrderId(orderUUID);
+        // then fetch order items associated with order repo
+        List<OrderItem> orderItems = orderItemRepository.findByOrderId(orderUUID);
 
-        if(orderItems.isEmpty()){
+        if (orderItems.isEmpty()) {
             throw new OrderNotFoundException("No order items found for order with UUID: " + orderUUID);
         }
 

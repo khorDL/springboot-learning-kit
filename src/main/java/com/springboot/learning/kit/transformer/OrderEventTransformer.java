@@ -4,15 +4,14 @@ import com.springboot.learning.kit.domain.OrderType;
 import com.springboot.learning.kit.dto.request.OrderRequest;
 import com.springboot.learning.kit.event.OrderEventType;
 import com.springboot.learning.kit.event.OrderPlacedEvent;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
 
 @Component
 @RequiredArgsConstructor
 public class OrderEventTransformer {
-    public OrderPlacedEvent transformToOrderPlacedEvent(OrderRequest orderRequest){
+    public OrderPlacedEvent transformToOrderPlacedEvent(OrderRequest orderRequest) {
         return OrderPlacedEvent.builder()
                 .orderId(orderRequest.getUUID())
                 .orderType(OrderType.valueOf(orderRequest.getOrderType()).name())

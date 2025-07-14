@@ -6,7 +6,6 @@ import com.springboot.learning.kit.service.AddressService;
 import com.springboot.learning.kit.service.CustomerService;
 import com.springboot.learning.kit.service.OrderItemService;
 import com.springboot.learning.kit.service.OrderService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

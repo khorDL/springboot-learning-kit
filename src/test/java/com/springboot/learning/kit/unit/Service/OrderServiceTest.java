@@ -1,5 +1,7 @@
 package com.springboot.learning.kit.unit.Service;
 
+import static org.mockito.Mockito.*;
+
 import com.springboot.learning.kit.domain.Order;
 import com.springboot.learning.kit.dto.request.OrderRequest;
 import com.springboot.learning.kit.service.OrderService;
@@ -10,8 +12,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class OrderServiceTest {
@@ -31,7 +31,8 @@ class OrderServiceTest {
         long addressId = 2L;
         OrderRequest request = new OrderRequest();
         Order order = new Order();
-        when(orderTransformer.transformOrderRequestToDomain(request, customerId, addressId)).thenReturn(order);
+        when(orderTransformer.transformOrderRequestToDomain(request, customerId, addressId))
+                .thenReturn(order);
 
         orderService.saveNewOrder(request, customerId, addressId);
 

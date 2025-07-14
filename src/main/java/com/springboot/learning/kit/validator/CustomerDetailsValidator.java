@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomerDetailsValidator implements Validator<CustomerDetailsRequest> {
 
-    private final static String VALID_PHONE_INDEX = "^\\+?(\\d{1,3})?[-.\\s]?(\\(?\\d{3}\\)?[-.\\s]?)?(\\d[-.\\s]?){6,9}\\d$";
+    private static final String VALID_PHONE_INDEX =
+            "^\\+?(\\d{1,3})?[-.\\s]?(\\(?\\d{3}\\)?[-.\\s]?)?(\\d[-.\\s]?){6,9}\\d$";
 
     @Override
     public void validate(CustomerDetailsRequest customerDetails) {
@@ -19,26 +20,26 @@ public class CustomerDetailsValidator implements Validator<CustomerDetailsReques
     }
 
     private void validateName(String name) {
-        if(name == null || name.isEmpty()){
+        if (name == null || name.isEmpty()) {
             throw new OrderValidationException("Customer name cannot be null or empty");
         }
     }
 
     private void validateEmail(String email) {
-        try{
+        try {
             InternetAddress emailAddr = new InternetAddress(email);
             emailAddr.validate();
-        }catch (AddressException e){
-            throw new OrderValidationException("Invalid email provided: " +email);
+        } catch (AddressException e) {
+            throw new OrderValidationException("Invalid email provided: " + email);
         }
     }
 
     private void validatePhoneNumber(String phone) {
-        if(phone == null || phone.trim().isEmpty()){
+        if (phone == null || phone.trim().isEmpty()) {
             throw new OrderValidationException("Customer phone cannot be null or empty");
         }
 
-        if(!phone.matches(VALID_PHONE_INDEX)){
+        if (!phone.matches(VALID_PHONE_INDEX)) {
             throw new OrderValidationException("Invalid phone number provided: " + phone);
         }
     }

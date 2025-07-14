@@ -1,5 +1,7 @@
 package com.springboot.learning.kit.unit.Service;
 
+import static org.mockito.Mockito.when;
+
 import au.com.origin.snapshots.Expect;
 import au.com.origin.snapshots.junit5.SnapshotExtension;
 import com.springboot.learning.kit.domain.Order;
@@ -9,18 +11,15 @@ import com.springboot.learning.kit.dto.response.OrderStatusResponse;
 import com.springboot.learning.kit.repository.OrderItemRepository;
 import com.springboot.learning.kit.repository.OrderRepository;
 import com.springboot.learning.kit.service.OrderStatusService;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Optional;
-
-import static org.mockito.Mockito.when;
 
 @ExtendWith({MockitoExtension.class, SnapshotExtension.class})
 public class OrderStatusServiceTest {
@@ -36,8 +35,8 @@ public class OrderStatusServiceTest {
     private Expect expect;
 
     @Test
-    void verifyOrderStatusResponse(){
-        //arrange
+    void verifyOrderStatusResponse() {
+        // arrange
         long orderUUID = 1L;
 
         // Mock the repository method that fetches the order
@@ -46,10 +45,10 @@ public class OrderStatusServiceTest {
         // Mock the repository method that fetches the order items
         when(orderItemRepository.findByOrderId(orderUUID)).thenReturn(createOrderItems(orderUUID));
 
-        //act
+        // act
         OrderStatusResponse status = orderStatusService.getOrderStatus(orderUUID);
 
-        //assert
+        // assert
         expect.serializer("json").toMatchSnapshot(status);
     }
 
@@ -80,7 +79,6 @@ public class OrderStatusServiceTest {
                         .quantity(1)
                         .status("PENDING")
                         .pricePerUnit(BigDecimal.valueOf(10.50))
-                        .build()
-        );
+                        .build());
     }
 }
